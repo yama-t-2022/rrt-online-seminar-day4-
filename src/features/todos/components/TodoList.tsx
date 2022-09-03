@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { remove, update, restore } from "../todosSlice";
 import { Todo } from "../types";
 
@@ -10,7 +10,10 @@ type Props = {
 export const TodoList: FC<Props> = ({ todos }) => {
   //const todos = useAppSelector((state) => state.todos.todos);
   //const todos = useAppSelector(selectTodos);
+
+  const displayStatus = useAppSelector((state) => state.todos.displayStatus);
   const dispatch = useAppDispatch();
+  const isSelectDeletedStatus = displayStatus === "deleted";
 
   return (
     <>
@@ -25,7 +28,8 @@ export const TodoList: FC<Props> = ({ todos }) => {
             <th>更新日時</th>
             <th>削除日時</th>
             <th>更新ボタン</th>
-            <th>削除ボタン</th>
+            {/* <th>削除ボタン</th> */}
+            <th>{isSelectDeletedStatus ? "復元ボタン" : "削除ボタン"}</th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +52,7 @@ export const TodoList: FC<Props> = ({ todos }) => {
                   <td>{todo.deletedAt ?? "無し"}</td>
                   <td>
                     <button
+                      disabled={isSelectDeletedStatus}
                       onClick={() => {
                         //更新機能
                         //
@@ -65,13 +70,14 @@ export const TodoList: FC<Props> = ({ todos }) => {
                     </button>
                   </td>
                   <td>
-                    {isDeletedTodo(todo) ? (
+                    {/* {isDeletedTodo(todo) ? ( */}
+                    {isSelectDeletedStatus ? (
                       <button
                         onClick={() => {
                           dispatch(restore(todo.id));
                         }}
                       >
-                        削除取り消し
+                        復元
                       </button>
                     ) : (
                       <button
@@ -93,8 +99,8 @@ export const TodoList: FC<Props> = ({ todos }) => {
   );
 };
 
-const isDeletedTodo = (todo: Todo) => {
-  return todo.deletedAt !== undefined;
-};
+// const isDeletedTodo = (todo: Todo) => {
+//   return todo.deletedAt !== undefined;
+// };
 
 export default TodoList;

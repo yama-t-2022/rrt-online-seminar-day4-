@@ -1,7 +1,6 @@
 //1:08:36
 
 import React from "react";
-import { Counter } from "./features/counter/Counter";
 import { TodoContainer } from "./features/todos/components/TodoContainer";
 // import TodoForm from "./features/todos/components/TodoForm";
 
