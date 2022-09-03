@@ -3,7 +3,7 @@ export type TodoId = string;
 //
 export type DateTime = string;
 
-const TODO_STATUSES = [
+export const TODO_STATUSES = [
   "waiting",
   "working",
   "pending",
