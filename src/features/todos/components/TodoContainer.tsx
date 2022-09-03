@@ -18,7 +18,6 @@ import { TodoList } from "./TodoList";
 export const TodoContainer: FC = () => {
   const todos = useAppSelector(selectTodos);
   const deletedTodos = useAppSelector(selectDeletedTodos);
-
   const isFetching = useAppSelector(selectIsFetching);
   const dispatch = useAppDispatch();
 
